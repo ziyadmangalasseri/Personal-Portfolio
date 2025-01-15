@@ -1,6 +1,7 @@
 import { content } from "../Content";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useState } from "react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -9,6 +10,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
 const Projects = () => {
+  const [details, setDetails] = useState(false);
   const { Projects } = content;
   return (
     <section className="bg-bg_light_primary" id="projects">
@@ -27,7 +29,7 @@ const Projects = () => {
             src={Projects.image}
             alt="..."
             data-aos="fade-right"
-            className="max-w-[45vw] min-w-[22rem]"
+            className="max-w-[45vw] min-w-[22rem] rounded-lg"
           />
           <Swiper
             pagination={{
@@ -40,15 +42,21 @@ const Projects = () => {
           >
             {Projects.project_content.map((content, i) => (
               <SwiperSlide
+                
                 key={i}
                 className="bg-white rounded-3xl p-5 border-b-8 border-[#FAF9FD] h-fit"
               >
-                <img src={content.image} alt="..." />
+                <img className="rounded-xl" src={content.image} alt="..." />
                 <div className="flex flex-col gap-1 mt-2">
                   <h5 className="font-bold font-Poppins">{content.title}</h5>
-                  <button className="font-bold text-gray self-end">
-                    READ MORE
+                  <button
+                    onClick={() => setDetails(!details)}
+                    className="font-bold text-gray self-end"
+                  >
+                    {!details ? "READ MORE":"^"}
+                    
                   </button>
+                  {details && <p>{content.details}</p>}
                 </div>
               </SwiperSlide>
             ))}
